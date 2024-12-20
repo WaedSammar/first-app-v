@@ -4,6 +4,7 @@ import CoursesList from "../courses-list/courses-list.component";
 import "./student.css";
 
 interface IProps extends IStudent {
+  onAbsentChange: (name: string, change: number) => void;
 }
 const Student = (props: IProps) => {
   // let absents = 0;    Replace it with the line below
@@ -14,6 +15,9 @@ const Student = (props: IProps) => {
     // absents += 1;    (JS)Replace it with the line below in React
     // absents += 1 and assign the absent to the line below? => We can't do like that cause it immutable
     setAbsents(absents + 1);
+    props.onAbsentChange(props.name, + 1);
+
+
     // setAbsents(absents + 2);
     // setAbsents(absents + 5); //take the last one
 
@@ -26,12 +30,15 @@ const Student = (props: IProps) => {
   }
 
   const removeAbsent = () => {
-    if(absents > 0)
-    setAbsents(absents - 1)
+    if (absents - 1 >= 0) {
+      setAbsents(absents - 1)
+      props.onAbsentChange(props.name, - 1);
+    }
   }
 
   const resetAbsent = () => {
     setAbsents(0);
+    props.onAbsentChange(props.name, -absents);
   }
   return (
     <div className="std-wrapper">
