@@ -4,32 +4,31 @@ import Student from "./component/student/student.component";
 import { IStudent } from "./types";
 import AddForm from "./component/add-form/add-form.component";
 
-
 const COURSES_LIST: string[] = ["React", "HTML", "CSS"];
 const INITIAL_LIST: Array<IStudent> = [
   {
-    id: '2401',
+    id: "2401",
     name: "Waad Amer",
     age: 20,
     isGraduated: false,
-    coursesList: ['Math', 'English'],
+    coursesList: ["Math", "English"],
   },
   {
-    id: '2402',
+    id: "2402",
     name: "Seba Rabee",
     age: 18,
     isGraduated: false,
-    coursesList: ['Web Dev', 'Science', 'React', 'HTML', 'Science'],
+    coursesList: ["Web Dev", "Science", "React", "HTML", "Science"],
   },
   {
-    id: '2403',
+    id: "2403",
     name: "Sayyaf Sammar",
     age: 24,
     isGraduated: true,
     coursesList: COURSES_LIST,
   },
   {
-    id: '2404',
+    id: "2404",
     name: "Abood Mohammad",
     age: 15,
     isGraduated: false,
@@ -46,35 +45,36 @@ function App() {
     newList.shift();
     // newList.pop();  Remove Last student
     setStudentsList(newList);
-  }
+  };
 
   const handleAbsentChange = (name: string, change: number) => {
     console.log("[App.tsx] Absent changed");
     console.log(`${name}: ${change}`);
     setTotalAbsents(totalAbsents + change);
-  }
+  };
 
+  const handleAddStudent = (newStudent: IStudent) => {
+    setStudentsList([newStudent, ...studentsList]);
+  };
   return (
     <div>
       <h1>Welcome to GSG React/Next Course</h1>
-      <AddForm />
+      <AddForm onSubmit={handleAddStudent} />
       <button onClick={removeFirst}>Remove First Student</button>
       <b>Total Absents {totalAbsents}</b>
-      {
-        studentsList.map(student => (
-          <Student
-            id={student.id}
-            key={student.id}
-            name={student.name}
-            age={student.age}
-            isGraduated={student.isGraduated}
-            coursesList={student.coursesList}
-            onAbsentChange={handleAbsentChange}
-          />
-        ))
-      }
+      {studentsList.map((student) => (
+        <Student
+          id={student.id}
+          key={student.id}
+          name={student.name}
+          age={student.age}
+          isGraduated={student.isGraduated}
+          coursesList={student.coursesList}
+          onAbsentChange={handleAbsentChange}
+        />
+      ))}
     </div>
-  )
+  );
 }
 
 export default App;
